@@ -26,14 +26,14 @@ def play_and_record(filename):
         with sf.SoundFile(filename, mode='x', samplerate=Fs, channels=1) as file:
             tone_data, tone_Fs = sf.read("tone.wav")
             print("RECORDING")
-            start = datetime.datetime.now()
             with sd.InputStream(channels=1, samplerate=Fs, callback=audio_callback):
+                start = datetime.datetime.now()
                 sd.play(tone_data, tone_Fs)
                 end = datetime.datetime.now()
                 while True:
                     file.write(q.get())
     except KeyboardInterrupt:
-        print("DONE RECORDING - INTRINSIC DELAY WAS:", (end - start).total_seconds(), "s")
+        print("DONE RECORDING - INTRINSIC DELAY WAS:", (end - start).total_seconds())
 
 
 if __name__ == '__main__':
